@@ -13,6 +13,12 @@ target_link_libraries(blisp PRIVATE
         argtable3
         libblisp_static)
 
+target_compile_options(libblisp_obj PRIVATE
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
+                -Wall -Wextra -Wpedantic>
+        $<$<CXX_COMPILER_ID:MSVC>:
+                /W4>)
+
 if (WIN32)
     target_link_libraries(blisp PRIVATE Setupapi.lib)
 elseif (APPLE)

@@ -7,10 +7,17 @@ option(BLISP_BUILD_CLI "Build CLI Tool" OFF)
 
 add_library(libblisp_obj OBJECT
         lib/blisp.c
+        lib/blisp_easy.c
+        lib/blisp_util.c
         lib/chip/blisp_chip_bl60x.c
-        lib/chip/blisp_chip_bl70x.c lib/blisp_easy.c)
+        lib/chip/blisp_chip_bl70x.c)
 
 target_include_directories(libblisp_obj PRIVATE ${CMAKE_SOURCE_DIR}/include/)
+target_compile_options(libblisp_obj PRIVATE
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
+                -Wall -Wextra -Wpedantic>
+        $<$<CXX_COMPILER_ID:MSVC>:
+                /W4>)
 
 set_property(TARGET libblisp_obj PROPERTY POSITION_INDEPENDENT_CODE 1)
 
