@@ -13,6 +13,8 @@ target_link_libraries(blisp PRIVATE
         argtable3
         libblisp_static)
 
+target_compile_options(blisp PRIVATE -Wall -Wextra -Wpedantic)
+
 if (WIN32)
     target_link_libraries(blisp PRIVATE Setupapi.lib)
 elseif (APPLE)
