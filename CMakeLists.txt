@@ -17,6 +17,14 @@ add_library(libblisp_obj OBJECT
         lib/chip/blisp_chip_bl70x.c)
 
 target_include_directories(libblisp_obj PRIVATE ${CMAKE_SOURCE_DIR}/include/)
+if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+  target_compile_options(libblisp_obj PRIVATE -Wall -Wextra -Wpedantic)
+else()
+  # MSVC does not support 'extra' and 'pedantic' levels to warnings.
+  # '/Wall' effectively enables everything it has.
+  # https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170
+  target_compile_options(libblisp_obj PRIVATE -Wall)
+endif()
 
 set_property(TARGET libblisp_obj PROPERTY POSITION_INDEPENDENT_CODE 1)
 
