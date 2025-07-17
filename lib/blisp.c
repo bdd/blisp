@@ -192,8 +192,8 @@ blisp_return_t blisp_device_handshake(struct blisp_device* device,
     sleep_ms(50);  // Wait a bit so BootROM can init
   }
 
-  uint32_t bytes_count = device->chip->handshake_byte_multiplier *
-                         (float)device->current_baud_rate / 10.0f;
+  uint32_t bytes_count = (uint32_t)(device->chip->handshake_byte_multiplier *
+                                    (float)device->current_baud_rate / 10.0f);
   if (bytes_count > 600)
     bytes_count = 600;
   memset(handshake_buffer, 'U', bytes_count);
@@ -281,7 +281,7 @@ blisp_return_t blisp_device_load_segment_header(
 
 blisp_return_t blisp_device_load_segment_data(struct blisp_device* device,
                                               uint8_t* segment_data,
-                                              uint32_t segment_data_length) {
+                                              uint16_t segment_data_length) {
   blisp_return_t ret;
   ret = blisp_send_command(device, 0x18, segment_data, segment_data_length,
                            false);
@@ -374,7 +374,7 @@ blisp_return_t blisp_device_flash_erase(struct blisp_device* device,
 blisp_return_t blisp_device_flash_write(struct blisp_device* device,
                                         uint32_t start_address,
                                         uint8_t* payload,
-                                        uint32_t payload_size) {
+                                        uint16_t payload_size) {
   // TODO: Add max payload size (8184?)
   // TODO: Don't use malloc + add check
 
