@@ -23,7 +23,7 @@ else()
   # MSVC does not support 'extra' and 'pedantic' levels to warnings.
   # '/Wall' effectively enables everything it has.
   # https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170
-  target_compile_options(libblisp_obj PRIVATE -Wall)
+  target_compile_options(libblisp_obj PRIVATE -W4)
 endif()
 
 set_property(TARGET libblisp_obj PROPERTY POSITION_INDEPENDENT_CODE 1)
